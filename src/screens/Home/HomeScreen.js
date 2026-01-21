@@ -8,10 +8,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import CarCard from '../../components/CarCard';
+import CarCard from '../../components/carCard';
 import SearchBar from '../../components/SearchBar';
 import FilterModal from '../../components/FilterModal';
-import { searchAvailableCars } from '../../services/CarService';
+import { searchAvailableCars } from '../../services/carService';
 
 const HomeScreen = ({ navigation }) => {
   const [cars, setCars] = useState([]);

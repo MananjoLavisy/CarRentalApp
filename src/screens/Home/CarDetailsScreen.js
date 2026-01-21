@@ -10,7 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { fetchCarDetails } from '../../services/CarService';
+import { fetchCarDetails } from '../../services/carService';
 import { formatPriceSimple } from '../../utils/priceCalculator';
 import { useAuth } from '../../contexts/AuthContext';
 import { checkIsFavorite, toggleCarFavorite } from '../../services/FavoriteService';
