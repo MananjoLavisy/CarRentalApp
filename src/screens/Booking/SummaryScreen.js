@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { formatDate } from '../../utils/dateHelpers';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
+import { formatDate } from '../../utils/dateHelper';
 import { formatPriceSimple } from '../../utils/priceCalculator';
 import { useAuth } from '../../contexts/AuthContext';
 

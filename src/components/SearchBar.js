@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 
 const SearchBar = ({ value, onChangeText, onFilterPress, placeholder = 'Rechercher une voiture...' }) => {
   return (

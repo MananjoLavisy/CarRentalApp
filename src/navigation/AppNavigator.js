@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { useAuth } from '../contexts/AuthContext';
 
 // Auth Screens
@@ -11,7 +11,7 @@ import RegisterScreen from '../screens/Auth/RegisterScreen';
 // Home Screens
 import HomeScreen from '../screens/Home/HomeScreen';
 import CarDetailsScreen from '../screens/Home/CarDetailsScreen';
-import FavoritesScreen from '../screens/Home/FavoritesScreen';
+import FavoritesScreen from '../screens/Home/FavoriteScreen';
 
 // Booking Screens
 import BookingFormScreen from '../screens/Booking/BookingFormScreen';

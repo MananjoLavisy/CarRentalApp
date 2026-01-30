@@ -1,4 +1,4 @@
-import { createUser, getUserByEmail } from '../database/models/User';
+import { createUser, getUserByEmail } from '../database/models/Users';
 
 export const register = async (userData) => {
   try {

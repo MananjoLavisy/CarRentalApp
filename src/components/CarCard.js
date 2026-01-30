@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { formatPriceSimple } from '../utils/priceCalculator';
 import { checkIsFavorite, toggleCarFavorite } from '../services/FavoriteService';
 import { useAuth } from '../contexts/AuthContext';

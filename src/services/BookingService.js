@@ -7,7 +7,7 @@ import {
 } from '../database/models/Reservation';
 import { updateCarStatus } from '../database/models/Car';
 import { generateTicketId } from '../utils/qrCodeGenerator';
-import { getDaysDifference } from '../utils/dateHelpers';
+import { getDaysDifference } from '../utils/dateHelper';
 import { calculateTotalPrice } from '../utils/priceCalculator';
 
 export const createBooking = async (userId, carId, startDate, endDate, pricePerDay) => {

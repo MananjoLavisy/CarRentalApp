@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { formatDate } from '../../utils/dateHelpers';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
+import { formatDate } from '../../utils/dateHelper';
 import { formatPriceSimple } from '../../utils/priceCalculator';
 
 const ConfirmationScreen = ({ route, navigation }) => {

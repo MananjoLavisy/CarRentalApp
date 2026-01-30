@@ -2,15 +2,15 @@ import { getDBConnection } from './db';
 
 export const seedDatabase = async () => {
   const db = await getDBConnection();
-  
+
   try {
     // Vérifier si déjà peuplé
-    const [result] = await db.executeSql('SELECT COUNT(*) as count FROM voitures');
-    if (result.rows.item(0).count > 0) {
+    const result = await db.getFirstAsync('SELECT COUNT(*) as count FROM voitures');
+    if (result.count > 0) {
       console.log('Database already seeded');
       return;
     }
-    
+
     // Seed Voitures
     const voitures = [
       {
@@ -92,18 +92,18 @@ export const seedDatabase = async () => {
         photos: JSON.stringify(['https://via.placeholder.com/400x300/0000ff/ffffff?text=Ford+Ranger'])
       }
     ];
-    
+
     for (const car of voitures) {
-      await db.executeSql(
-        `INSERT INTO voitures (marque, modele, annee, couleur, type, nombre_places, 
-          transmission, prix_par_jour, immatriculation, description, photos) 
+      await db.runAsync(
+        `INSERT INTO voitures (marque, modele, annee, couleur, type, nombre_places,
+          transmission, prix_par_jour, immatriculation, description, photos)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [car.marque, car.modele, car.annee, car.couleur, car.type, 
-         car.nombre_places, car.transmission, car.prix_par_jour, 
-         car.immatriculation, car.description, car.photos]
+        [car.marque, car.modele, car.annee, car.couleur, car.type,
+          car.nombre_places, car.transmission, car.prix_par_jour,
+          car.immatriculation, car.description, car.photos]
       );
     }
-    
+
     // Seed FAQ
     const faqs = [
       {
@@ -155,15 +155,15 @@ export const seedDatabase = async () => {
         ordre: 8
       }
     ];
-    
+
     for (const faq of faqs) {
-      await db.executeSql(
+      await db.runAsync(
         'INSERT INTO faq (question, reponse, categorie, ordre) VALUES (?, ?, ?, ?)',
         [faq.question, faq.reponse, faq.categorie, faq.ordre]
       );
     }
-    
-    console.log(' Database seeded successfully');
+
+    console.log('Database seeded successfully');
   } catch (error) {
     console.error('Error seeding database:', error);
     throw error;

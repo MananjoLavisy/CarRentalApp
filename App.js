@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthProvider } from './src/contexts/AuthContext';
-import { createTables } from './src/database/migrations';
+import { createTables } from './src/database/migration';
 import { seedDatabase } from './src/database/seed';
 import { initNotifications } from './src/services/NotificationService';
 import AppNavigator from './src/navigation/AppNavigator';

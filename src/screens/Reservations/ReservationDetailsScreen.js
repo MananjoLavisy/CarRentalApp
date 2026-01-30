@@ -10,11 +10,11 @@ import {
   Alert,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { fetchReservationDetails, cancelReservation } from '../../services/BookingService';
 import { getPaymentByReservation } from '../../services/PaymentService';
 import { getExtensionHistory } from '../../services/ExtensionService';
-import { formatDate, formatDateTime, getDaysUntil } from '../../utils/dateHelpers';
+import { formatDate, formatDateTime, getDaysUntil } from '../../utils/dateHelper';
 import { formatPriceSimple } from '../../utils/priceCalculator';
 
 const ReservationDetailsScreen = ({ route, navigation }) => {

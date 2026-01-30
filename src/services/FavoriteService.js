@@ -1,4 +1,4 @@
-import { toggleFavorite, getFavorites, isFavorite } from '../database/models/Favorite';
+import { toggleFavorite, getFavorites, isFavorite } from '../database/models/Favorites';
 
 export const toggleCarFavorite = async (userId, carId) => {
   try {

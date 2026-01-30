@@ -10,8 +10,8 @@ import {
   Platform,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { formatDate, getDaysDifference, addDays } from '../../utils/dateHelpers';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
+import { formatDate, getDaysDifference, addDays } from '../../utils/dateHelper';
 import { calculateTotalPrice, formatPriceSimple } from '../../utils/priceCalculator';
 
 const BookingFormScreen = ({ route, navigation }) => {

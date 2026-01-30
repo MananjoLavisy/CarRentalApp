@@ -10,10 +10,10 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { register } from '../../services/AuthService';
 import { useAuth } from '../../contexts/AuthContext';
-import { validateEmail, validatePassword, validatePhone, validateRequired } from '../../utils/validators';
+import { validateEmail, validatePassword, validatePhone, validateRequired } from '../../utils/validator';
 
 const RegisterScreen = ({ navigation }) => {
   const { loginUser } = useAuth();

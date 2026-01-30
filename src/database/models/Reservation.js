@@ -3,15 +3,15 @@ import { getDBConnection } from '../db';
 export const createReservation = async (reservationData) => {
   const db = await getDBConnection();
   const { user_id, voiture_id, date_debut, date_fin, nombre_jours, prix_total, ticket_id } = reservationData;
-  
+
   try {
-    const [result] = await db.executeSql(
-      `INSERT INTO reservations (user_id, voiture_id, date_debut, date_fin, nombre_jours, prix_total, ticket_id, statut) 
+    const result = await db.runAsync(
+      `INSERT INTO reservations (user_id, voiture_id, date_debut, date_fin, nombre_jours, prix_total, ticket_id, statut)
        VALUES (?, ?, ?, ?, ?, ?, ?, 'confirmée')`,
       [user_id, voiture_id, date_debut, date_fin, nombre_jours, prix_total, ticket_id]
     );
-    
-    return { id: result.insertId, ...reservationData };
+
+    return { id: result.lastInsertRowId, ...reservationData };
   } catch (error) {
     console.error('Error creating reservation:', error);
     throw error;
@@ -20,9 +20,9 @@ export const createReservation = async (reservationData) => {
 
 export const getReservationsByUserId = async (userId) => {
   const db = await getDBConnection();
-  
+
   try {
-    const [result] = await db.executeSql(
+    const result = await db.getAllAsync(
       `SELECT r.*, v.marque, v.modele, v.photos, v.immatriculation, v.type
        FROM reservations r
        INNER JOIN voitures v ON r.voiture_id = v.id
@@ -30,14 +30,11 @@ export const getReservationsByUserId = async (userId) => {
        ORDER BY r.date_reservation DESC`,
       [userId]
     );
-    
-    const reservations = [];
-    for (let i = 0; i < result.rows.length; i++) {
-      const reservation = result.rows.item(i);
-      reservation.photos = JSON.parse(reservation.photos);
-      reservations.push(reservation);
-    }
-    return reservations;
+
+    return result.map(reservation => ({
+      ...reservation,
+      photos: JSON.parse(reservation.photos)
+    }));
   } catch (error) {
     console.error('Error getting reservations:', error);
     throw error;
@@ -46,18 +43,17 @@ export const getReservationsByUserId = async (userId) => {
 
 export const getReservationById = async (id) => {
   const db = await getDBConnection();
-  
+
   try {
-    const [result] = await db.executeSql(
+    const reservation = await db.getFirstAsync(
       `SELECT r.*, v.marque, v.modele, v.photos, v.immatriculation, v.type, v.couleur, v.transmission
        FROM reservations r
        INNER JOIN voitures v ON r.voiture_id = v.id
        WHERE r.id = ?`,
       [id]
     );
-    
-    if (result.rows.length > 0) {
-      const reservation = result.rows.item(0);
+
+    if (reservation) {
       reservation.photos = JSON.parse(reservation.photos);
       return reservation;
     }
@@ -70,9 +66,9 @@ export const getReservationById = async (id) => {
 
 export const updateReservationStatus = async (id, status) => {
   const db = await getDBConnection();
-  
+
   try {
-    await db.executeSql(
+    await db.runAsync(
       'UPDATE reservations SET statut = ? WHERE id = ?',
       [status, id]
     );
@@ -84,11 +80,11 @@ export const updateReservationStatus = async (id, status) => {
 
 export const checkCarAvailability = async (carId, startDate, endDate) => {
   const db = await getDBConnection();
-  
+
   try {
-    const [result] = await db.executeSql(
-      `SELECT COUNT(*) as count FROM reservations 
-       WHERE voiture_id = ? 
+    const result = await db.getFirstAsync(
+      `SELECT COUNT(*) as count FROM reservations
+       WHERE voiture_id = ?
        AND statut IN ('confirmée', 'en_cours')
        AND (
          (date_debut <= ? AND date_fin >= ?) OR
@@ -97,8 +93,8 @@ export const checkCarAvailability = async (carId, startDate, endDate) => {
        )`,
       [carId, startDate, startDate, endDate, endDate, startDate, endDate]
     );
-    
-    return result.rows.item(0).count === 0;
+
+    return result.count === 0;
   } catch (error) {
     console.error('Error checking availability:', error);
     throw error;

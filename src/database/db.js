@@ -1,19 +1,14 @@
-import SQLite from 'react-native-sqlite-storage';
+import * as SQLite from 'expo-sqlite';
 
-SQLite.enablePromise(true);
-
-let db;
+let db = null;
 
 export const getDBConnection = async () => {
   if (db) {
     return db;
   }
-  
+
   try {
-    db = await SQLite.openDatabase({
-      name: 'CarRentalDB.db',
-      location: 'default',
-    });
+    db = await SQLite.openDatabaseAsync('CarRentalDB.db');
     console.log('Database opened successfully');
     return db;
   } catch (error) {
@@ -24,7 +19,7 @@ export const getDBConnection = async () => {
 
 export const closeDatabase = async () => {
   if (db) {
-    await db.close();
+    await db.closeAsync();
     console.log('Database closed');
     db = null;
   }

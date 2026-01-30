@@ -2,10 +2,10 @@ import { getDBConnection } from './db';
 
 export const createTables = async () => {
   const db = await getDBConnection();
-  
+
   try {
     // Table Users
-    await db.executeSql(`
+    await db.execAsync(`
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nom TEXT NOT NULL,
@@ -18,9 +18,9 @@ export const createTables = async () => {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    
+
     // Table Voitures
-    await db.executeSql(`
+    await db.execAsync(`
       CREATE TABLE IF NOT EXISTS voitures (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         marque TEXT NOT NULL,
@@ -38,9 +38,9 @@ export const createTables = async () => {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    
+
     // Table Reservations
-    await db.executeSql(`
+    await db.execAsync(`
       CREATE TABLE IF NOT EXISTS reservations (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
@@ -57,9 +57,9 @@ export const createTables = async () => {
         FOREIGN KEY (voiture_id) REFERENCES voitures(id)
       )
     `);
-    
+
     // Table Paiements
-    await db.executeSql(`
+    await db.execAsync(`
       CREATE TABLE IF NOT EXISTS paiements (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         reservation_id INTEGER NOT NULL,
@@ -71,9 +71,9 @@ export const createTables = async () => {
         FOREIGN KEY (reservation_id) REFERENCES reservations(id)
       )
     `);
-    
+
     // Table Favoris
-    await db.executeSql(`
+    await db.execAsync(`
       CREATE TABLE IF NOT EXISTS favoris (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
@@ -84,9 +84,9 @@ export const createTables = async () => {
         UNIQUE(user_id, voiture_id)
       )
     `);
-    
+
     // Table FAQ
-    await db.executeSql(`
+    await db.execAsync(`
       CREATE TABLE IF NOT EXISTS faq (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         question TEXT NOT NULL,
@@ -95,9 +95,9 @@ export const createTables = async () => {
         ordre INTEGER DEFAULT 0
       )
     `);
-    
+
     // Table Extensions
-    await db.executeSql(`
+    await db.execAsync(`
       CREATE TABLE IF NOT EXISTS extensions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         reservation_id INTEGER NOT NULL,
@@ -109,9 +109,9 @@ export const createTables = async () => {
         FOREIGN KEY (reservation_id) REFERENCES reservations(id)
       )
     `);
-    
+
     // Table Notifications
-    await db.executeSql(`
+    await db.execAsync(`
       CREATE TABLE IF NOT EXISTS notifications (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
@@ -124,7 +124,7 @@ export const createTables = async () => {
         FOREIGN KEY (user_id) REFERENCES users(id)
       )
     `);
-    
+
     console.log('All tables created successfully');
   } catch (error) {
     console.error('Error creating tables:', error);
@@ -135,10 +135,10 @@ export const createTables = async () => {
 export const dropAllTables = async () => {
   const db = await getDBConnection();
   const tables = ['notifications', 'extensions', 'faq', 'favoris', 'paiements', 'reservations', 'voitures', 'users'];
-  
+
   for (const table of tables) {
-    await db.executeSql(`DROP TABLE IF EXISTS ${table}`);
+    await db.execAsync(`DROP TABLE IF EXISTS ${table}`);
   }
-  
+
   console.log('All tables dropped');
 };

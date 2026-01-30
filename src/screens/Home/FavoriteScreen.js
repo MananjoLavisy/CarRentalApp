@@ -8,7 +8,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import CarCard from '../../components/carCard';
+import CarCard from '../../components/CarCard';
 import { fetchUserFavorites } from '../../services/FavoriteService';
 import { useAuth } from '../../contexts/AuthContext';
 
